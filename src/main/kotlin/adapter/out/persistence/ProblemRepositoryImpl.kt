@@ -29,7 +29,10 @@ class ProblemRepositoryImpl(
             builder.and(qProblem.level.`in`(criteria.levelRange))
         }
 
-        return jpaQueryFactory.selectFrom(qProblem).where(builder).fetch()
+        return jpaQueryFactory.selectFrom(qProblem)
+            .innerJoin(qProblem.unitCode).fetchJoin()
+            .where(builder)
+            .fetch()
     }
 
 }
