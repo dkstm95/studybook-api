@@ -11,7 +11,7 @@ class PieceAssignment(
     @JoinColumn(name = "piece_id")
     val piece: Piece,
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long ?= null
 ) {
     companion object {
