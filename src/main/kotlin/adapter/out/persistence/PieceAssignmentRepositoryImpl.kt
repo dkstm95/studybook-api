@@ -9,6 +9,10 @@ class PieceAssignmentRepositoryImpl(
     private val jpaRepository: SpringDataPieceAssignmentRepository,
 ) : PieceAssignmentRepository {
 
+    override fun findByPieceIdAndStudentId(pieceId: Long, studentId: Long): PieceAssignment? {
+        return jpaRepository.findByPieceIdAndStudentId(pieceId, studentId)
+    }
+
     override fun findAllByPieceId(pieceId: Long): List<PieceAssignment> {
         return jpaRepository.findAllByPieceId(pieceId)
     }

@@ -14,8 +14,8 @@ class ProblemRepositoryImpl(
     private val jpaQueryFactory: JPAQueryFactory
 ) : ProblemRepository {
 
-    override fun findAllById(problemIds: List<Long>): List<Problem> {
-        return jpaRepository.findAllById(problemIds)
+    override fun fetchAllById(problemIds: List<Long>): List<Problem> {
+        return jpaRepository.fetchAllById(problemIds)
     }
 
     override fun findProblemsByCriteria(criteria: ProblemSearchCriteria): List<Problem> {

@@ -1,21 +1,20 @@
 package com.seungilahn.domain
 
-import jakarta.persistence.*
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
 
 @Entity
 class PieceProblem(
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "piece_id")
-    val piece: Piece,
+    val pieceId: Long,
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "problem_id")
-    val problem: Problem,
+    val problemId: Long,
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null
 ) {
     companion object {
-        fun withoutId(piece: Piece, problem: Problem) = PieceProblem(piece, problem)
+        fun withoutId(pieceId: Long, problemId: Long) = PieceProblem(pieceId, problemId)
     }
 }
