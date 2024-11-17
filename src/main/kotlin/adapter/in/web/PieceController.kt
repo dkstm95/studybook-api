@@ -7,13 +7,14 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 class PieceController(
-    private val pieceService: PieceService
+    private val queryService: PieceQueryService,
+    private val useCase: PieceUseCase,
 ) {
 
     // TODO: teacher authentication
     @PostMapping("/piece")
     fun create(@RequestBody @Valid request: CreatePieceRequest): ApiResponse<CreatePieceResponse> = ApiResponse.success(
-        pieceService.create(request.teacherId!!, request.pieceName!!, request.problemIds!!)
+        useCase.create(request.teacherId!!, request.pieceName!!, request.problemIds!!)
     )
 
     // TODO: teacherId should be retrieved from authentication
@@ -22,7 +23,7 @@ class PieceController(
         @PathVariable pieceId: Long,
         @RequestParam studentIds: List<Long>
     ): ApiResponse<AssignPieceResponse> = ApiResponse.success(
-        pieceService.assign(pieceId = pieceId, studentIds = studentIds, teacherId = 1)
+        useCase.assign(pieceId = pieceId, studentIds = studentIds, teacherId = 1)
     )
 
     // TODO: studentId should be retrieved from authentication
@@ -30,7 +31,7 @@ class PieceController(
     fun getPieceProblems(
         @RequestParam pieceId: Long
     ): ApiResponse<GetPieceProblemResponse> = ApiResponse.success(
-        pieceService.getPieceProblems(pieceId = pieceId, studentId = 1)
+        queryService.getPieceProblems(pieceId = pieceId, studentId = 1)
     )
 
     // TODO: studentId should be retrieved from authentication
@@ -39,7 +40,7 @@ class PieceController(
         @RequestParam pieceId: Long,
         @RequestBody @Valid request: GradePieceProblemsRequest
     ): ApiResponse<GradePieceProblemsResponse> = ApiResponse.success(
-        pieceService.gradePieceProblems(pieceId, request, studentId = 1)
+        useCase.gradePieceProblems(pieceId, request, studentId = 1)
     )
 
 }
