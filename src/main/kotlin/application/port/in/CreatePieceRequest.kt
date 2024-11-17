@@ -10,6 +10,6 @@ data class CreatePieceRequest(
     @field:NotBlank(message = "Piece name must not be blank")
     val pieceName: String?,
 
-    @field:NotNull(message = "Level must not be null")
+    @field:NotNull(message = "Problem IDs must not be null")
     val problemIds: List<Long>?
 )

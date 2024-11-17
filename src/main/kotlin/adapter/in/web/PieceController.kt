@@ -15,8 +15,8 @@ class PieceController(
 ) {
 
     @PostMapping("/piece")
-    fun create(@RequestBody @Valid request: CreatePieceRequest): ApiResponse<CreatePieceResponse> {
-        return ApiResponse.success(pieceService.create(request.teacherId!!, request.pieceName!!, request.problemIds!!))
-    }
+    fun create(@RequestBody @Valid request: CreatePieceRequest): ApiResponse<CreatePieceResponse> = ApiResponse.success(
+        pieceService.create(request.teacherId!!, request.pieceName!!, request.problemIds!!)
+    )
 
 }
