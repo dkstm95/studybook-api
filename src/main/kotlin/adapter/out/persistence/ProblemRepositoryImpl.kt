@@ -1,0 +1,35 @@
+package com.seungilahn.adapter.out.persistence
+
+import com.querydsl.core.BooleanBuilder
+import com.querydsl.jpa.impl.JPAQueryFactory
+import com.seungilahn.application.port.out.ProblemRepository
+import com.seungilahn.domain.Problem
+import com.seungilahn.domain.ProblemSearchCriteria
+import com.seungilahn.domain.QProblem
+import org.springframework.stereotype.Repository
+
+@Repository
+class ProblemRepositoryImpl(
+    private val jpaQueryFactory: JPAQueryFactory
+) : ProblemRepository {
+
+    override fun findProblemsByCriteria(criteria: ProblemSearchCriteria): List<Problem> {
+        val qProblem = QProblem.problem
+        val builder = BooleanBuilder()
+
+        if (criteria.unitCodeList.isNotEmpty()) {
+            builder.and(qProblem.unitCode.code.`in`(criteria.unitCodeList))
+        }
+
+        if (criteria.problemType != null) {
+            builder.and(qProblem.type.eq(criteria.problemType))
+        }
+
+        if (criteria.levelRange.isNotEmpty()) {
+            builder.and(qProblem.level.`in`(criteria.levelRange))
+        }
+
+        return jpaQueryFactory.selectFrom(qProblem).where(builder).fetch()
+    }
+
+}

@@ -3,6 +3,7 @@ package com.seungilahn.domain
 enum class ProblemType(val typeName: String) {
     SELECTION("SELECTION")
     , SUBJECTIVE("SUBJECTIVE")
+    , ALL("ALL")
     ;
 
     companion object {
