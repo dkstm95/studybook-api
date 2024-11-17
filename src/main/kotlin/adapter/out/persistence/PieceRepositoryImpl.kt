@@ -1,23 +1,21 @@
 package com.seungilahn.adapter.out.persistence
 
-import com.seungilahn.application.port.out.PieceProblemRepository
 import com.seungilahn.application.port.out.PieceRepository
 import com.seungilahn.domain.Piece
-import com.seungilahn.domain.PieceProblem
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Repository
 
 @Repository
 class PieceRepositoryImpl(
-    private val pieceJpaRepository: SpringDataPieceRepository,
-    private val pieceProblemJpaRepository: SpringDataPieceProblemRepository
-) : PieceRepository, PieceProblemRepository {
+    private val jpaRepository: SpringDataPieceRepository,
+) : PieceRepository {
 
-    override fun save(piece: Piece): Piece {
-        return pieceJpaRepository.save(piece)
+    override fun findByIdOrNull(pieceId: Long): Piece? {
+        return jpaRepository.findByIdOrNull(pieceId)
     }
 
-    override fun saveAll(pieceProblems: List<PieceProblem>) {
-        pieceProblemJpaRepository.saveAll(pieceProblems)
+    override fun save(piece: Piece): Piece {
+        return jpaRepository.save(piece)
     }
 
 }

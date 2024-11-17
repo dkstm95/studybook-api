@@ -13,6 +13,7 @@ class ProblemController(
     private val problemQueryService: ProblemQueryService
 ) {
 
+    // TODO: teacher authentication
     @GetMapping("/problems")
     fun getProblems(
         @RequestParam totalCount: Int,

@@ -22,4 +22,6 @@ class Piece(
     companion object {
         fun withoutId(teacherId: Long, name: String) = Piece(teacherId, name)
     }
+
+    fun isSameTeacher(teacherId: Long) = this.teacherId == teacherId
 }
