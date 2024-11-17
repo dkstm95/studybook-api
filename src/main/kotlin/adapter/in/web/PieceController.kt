@@ -33,4 +33,13 @@ class PieceController(
         pieceService.getPieceProblems(pieceId = pieceId, studentId = 1)
     )
 
+    // TODO: studentId should be retrieved from authentication
+    @PutMapping("/piece/problems")
+    fun gradePieceProblems(
+        @RequestParam pieceId: Long,
+        @RequestBody @Valid request: GradePieceProblemsRequest
+    ): ApiResponse<GradePieceProblemsResponse> = ApiResponse.success(
+        pieceService.gradePieceProblems(pieceId, request, studentId = 1)
+    )
+
 }

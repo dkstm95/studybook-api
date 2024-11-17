@@ -21,6 +21,10 @@ class Problem(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null
 ) {
+    fun isCorrect(studentAnswer: String): Boolean {
+        return answer == studentAnswer
+    }
+
     companion object {
         fun withId(id: Long, level: Int, type: ProblemType, answer: String, unitCode: UnitCode) =
             Problem(level, type, answer, unitCode, id)
