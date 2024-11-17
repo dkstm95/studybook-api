@@ -1,6 +1,6 @@
 package com.seungilahn.application.port.`in`
 
-import com.seungilahn.adapter.`in`.web.GetProblemsResponse
+import com.seungilahn.adapter.`in`.web.GetProblemResponse
 import com.seungilahn.application.port.out.ProblemRepository
 import com.seungilahn.domain.LevelCategory
 import com.seungilahn.domain.ProblemSearchCriteria
@@ -19,7 +19,7 @@ class ProblemQueryService(
         unitCodeList: List<String>,
         levelCategory: LevelCategory,
         problemType: ProblemType
-    ): List<GetProblemsResponse> {
+    ): List<GetProblemResponse> {
 
         val filteredProblems = problemRepository.findProblemsByCriteria(
             ProblemSearchCriteria(
@@ -45,7 +45,7 @@ class ProblemQueryService(
                 mediumProblems.take(mediumCount) +
                 hardProblems.take(hardCount)
 
-        return selectedProblems.map { GetProblemsResponse.from(it) }
+        return selectedProblems.map { GetProblemResponse.from(it) }
     }
 
 }

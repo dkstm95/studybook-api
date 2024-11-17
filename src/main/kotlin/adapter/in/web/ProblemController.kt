@@ -19,7 +19,7 @@ class ProblemController(
         @RequestParam unitCodeList: List<String>,
         @RequestParam level: String,
         @RequestParam problemType: String
-    ): ApiResponse<List<GetProblemsResponse>> = ApiResponse.success(
+    ): ApiResponse<List<GetProblemResponse>> = ApiResponse.success(
         problemQueryService.getProblems(
             totalCount,
             unitCodeList,
