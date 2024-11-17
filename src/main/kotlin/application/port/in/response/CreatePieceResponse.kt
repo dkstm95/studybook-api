@@ -1,6 +1,4 @@
-package com.seungilahn.application.port.`in`
-
-import com.seungilahn.adapter.`in`.web.GetProblemResponse
+package com.seungilahn.application.port.`in`.response
 
 data class CreatePieceResponse(
     val pieceId: Long,

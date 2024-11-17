@@ -1,4 +1,4 @@
-package com.seungilahn.application.port.`in`
+package com.seungilahn.application.port.`in`.request
 
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull

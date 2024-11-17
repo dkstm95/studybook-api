@@ -1,5 +1,6 @@
 package com.seungilahn.adapter.`in`.web
 
+import com.seungilahn.application.port.`in`.response.GetProblemResponse
 import com.seungilahn.application.port.`in`.ProblemQueryService
 import com.seungilahn.common.ApiResponse
 import com.seungilahn.domain.LevelCategory

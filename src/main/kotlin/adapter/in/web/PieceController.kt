@@ -1,6 +1,9 @@
 package com.seungilahn.adapter.`in`.web
 
 import com.seungilahn.application.port.`in`.*
+import com.seungilahn.application.port.`in`.request.CreatePieceRequest
+import com.seungilahn.application.port.`in`.request.GradePieceProblemsRequest
+import com.seungilahn.application.port.`in`.response.*
 import com.seungilahn.common.ApiResponse
 import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.*

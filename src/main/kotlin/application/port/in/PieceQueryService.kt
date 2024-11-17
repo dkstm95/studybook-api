@@ -1,6 +1,8 @@
 package com.seungilahn.application.port.`in`
 
-import com.seungilahn.adapter.`in`.web.GetProblemResponse
+import com.seungilahn.application.port.`in`.response.AnalyzePieceResponse
+import com.seungilahn.application.port.`in`.response.GetPieceProblemResponse
+import com.seungilahn.application.port.`in`.response.GetProblemResponse
 import com.seungilahn.application.port.out.*
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

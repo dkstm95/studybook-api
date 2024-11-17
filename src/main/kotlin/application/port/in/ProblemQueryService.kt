@@ -1,6 +1,6 @@
 package com.seungilahn.application.port.`in`
 
-import com.seungilahn.adapter.`in`.web.GetProblemResponse
+import com.seungilahn.application.port.`in`.response.GetProblemResponse
 import com.seungilahn.application.port.out.ProblemRepository
 import com.seungilahn.domain.LevelCategory
 import com.seungilahn.domain.ProblemSearchCriteria

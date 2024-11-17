@@ -1,4 +1,4 @@
-package com.seungilahn.adapter.`in`.web
+package com.seungilahn.application.port.`in`.response
 
 import com.seungilahn.domain.Problem
 

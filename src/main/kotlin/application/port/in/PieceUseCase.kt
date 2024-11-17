@@ -1,6 +1,10 @@
 package com.seungilahn.application.port.`in`
 
-import com.seungilahn.adapter.`in`.web.GetProblemResponse
+import com.seungilahn.application.port.`in`.request.GradePieceProblemsRequest
+import com.seungilahn.application.port.`in`.response.AssignPieceResponse
+import com.seungilahn.application.port.`in`.response.CreatePieceResponse
+import com.seungilahn.application.port.`in`.response.GetProblemResponse
+import com.seungilahn.application.port.`in`.response.GradePieceProblemsResponse
 import com.seungilahn.application.port.out.*
 import com.seungilahn.domain.*
 import org.springframework.stereotype.Service

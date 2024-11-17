@@ -1,4 +1,4 @@
-package com.seungilahn.application.port.`in`
+package com.seungilahn.application.port.`in`.response
 
 data class GradePieceProblemsResponse(
     val pieceId: Long,

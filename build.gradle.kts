@@ -38,7 +38,7 @@ dependencies {
     implementation("org.apache.poi:poi-ooxml:5.3.0")
 
     // Database
-    runtimeOnly("com.h2database:h2")
+    implementation("com.h2database:h2")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
