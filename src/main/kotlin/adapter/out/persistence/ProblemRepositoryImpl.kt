@@ -10,8 +10,13 @@ import org.springframework.stereotype.Repository
 
 @Repository
 class ProblemRepositoryImpl(
+    private val jpaRepository: SpringDataProblemRepository,
     private val jpaQueryFactory: JPAQueryFactory
 ) : ProblemRepository {
+
+    override fun findAllById(problemIds: List<Long>): List<Problem> {
+        return jpaRepository.findAllById(problemIds)
+    }
 
     override fun findProblemsByCriteria(criteria: ProblemSearchCriteria): List<Problem> {
         val qProblem = QProblem.problem
