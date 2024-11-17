@@ -13,7 +13,7 @@ class PieceProblem(
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null
-) {
+) : BaseTimeEntity() {
     companion object {
         fun withoutId(pieceId: Long, problemId: Long) = PieceProblem(pieceId, problemId)
     }

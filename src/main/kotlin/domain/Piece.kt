@@ -10,7 +10,7 @@ class Piece(
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long ?= null
-) {
+) : BaseTimeEntity() {
     @Column(nullable = false)
     var teacherId: Long = teacherId
         protected set

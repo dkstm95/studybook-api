@@ -12,7 +12,7 @@ class UnitCode(
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null
-) {
+) : BaseTimeEntity() {
     companion object {
         fun withoutId(code: String, name: String) = UnitCode(code, name)
     }

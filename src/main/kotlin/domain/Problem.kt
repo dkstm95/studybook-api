@@ -20,7 +20,7 @@ class Problem(
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null
-) {
+) : BaseTimeEntity() {
     fun isCorrect(studentAnswer: String): Boolean {
         return answer == studentAnswer
     }

@@ -13,7 +13,7 @@ class PieceAssignment(
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long ?= null
-) {
+) : BaseTimeEntity() {
     companion object {
         fun withoutId(studentId: Long, piece: Piece) = PieceAssignment(studentId, piece)
     }
