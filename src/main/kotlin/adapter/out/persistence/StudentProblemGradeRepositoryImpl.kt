@@ -9,6 +9,10 @@ class StudentProblemGradeRepositoryImpl(
     private val jpaRepository: SpringDataStudentProblemGradeRepository,
 ) : StudentProblemGradeRepository {
 
+    override fun findAllByPieceId(pieceId: Long): List<StudentProblemGrade> {
+        return jpaRepository.findAllByPieceId(pieceId)
+    }
+
     override fun saveAll(studentProblemGrades: List<StudentProblemGrade>): List<StudentProblemGrade> {
         return jpaRepository.saveAll(studentProblemGrades)
     }

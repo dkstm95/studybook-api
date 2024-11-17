@@ -34,6 +34,13 @@ class PieceController(
         queryService.getPieceProblems(pieceId = pieceId, studentId = 1)
     )
 
+    @GetMapping("/piece/analyze")
+    fun analyzePiece(
+        @RequestParam pieceId: Long
+    ): ApiResponse<AnalyzePieceResponse> = ApiResponse.success(
+        queryService.analyzePiece(pieceId)
+    )
+
     // TODO: studentId should be retrieved from authentication
     @PutMapping("/piece/problems")
     fun gradePieceProblems(
