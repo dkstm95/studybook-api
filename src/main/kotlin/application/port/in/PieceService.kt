@@ -22,27 +22,25 @@ class PieceService(
 
     @Transactional
     fun create(teacherId: Long, pieceName: String, problemIds: List<Long>): CreatePieceResponse {
-
         if (problemIds.isEmpty() || problemIds.size > MAX_PIECE_PROBLEMS_COUNT) {
             throw IllegalArgumentException("문제는 1개 이상 ${MAX_PIECE_PROBLEMS_COUNT}개 이하로 선택해주세요.")
         }
 
-        val problems = problemRepository.findAllById(problemIds)
-
-        val piece = pieceRepository.save(
+        val newPiece = pieceRepository.save(
             Piece.withoutId(teacherId = teacherId, name = pieceName)
         )
 
-        val pieceProblems = problems.map { PieceProblem.withoutId(piece = piece, problem = it) }
-        pieceProblemRepository.saveAll(pieceProblems)
-
-        return CreatePieceResponse(
-            pieceId = piece.id!!,
-            pieceName = piece.name,
-            teacherId = piece.teacherId,
-            problems = problems.map { GetProblemResponse.from(it) }
+        val problems = problemRepository.findAllById(problemIds)
+        pieceProblemRepository.saveAll(
+            problems.map { PieceProblem.withoutId(piece = newPiece, problem = it) }
         )
 
+        return CreatePieceResponse(
+            pieceId = newPiece.id!!,
+            pieceName = newPiece.name,
+            teacherId = newPiece.teacherId,
+            problems = problems.map { GetProblemResponse.from(it) }
+        )
     }
 
 }
