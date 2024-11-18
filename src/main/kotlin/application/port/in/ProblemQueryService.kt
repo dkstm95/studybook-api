@@ -21,7 +21,7 @@ class ProblemQueryService(
         problemType: ProblemType
     ): List<GetProblemResponse> {
 
-        val filteredProblems = problemRepository.findProblemsByCriteria(
+        val filteredProblems = problemRepository.fetchProblemsByCriteria(
             ProblemSearchCriteria(
                 unitCodeList = unitCodeList,
                 problemType = problemType,

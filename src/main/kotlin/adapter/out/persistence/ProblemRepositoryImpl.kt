@@ -18,7 +18,7 @@ class ProblemRepositoryImpl(
         return jpaRepository.fetchAllById(problemIds)
     }
 
-    override fun findProblemsByCriteria(criteria: ProblemSearchCriteria): List<Problem> {
+    override fun fetchProblemsByCriteria(criteria: ProblemSearchCriteria): List<Problem> {
         val qProblem = QProblem.problem
         val builder = BooleanBuilder()
 
