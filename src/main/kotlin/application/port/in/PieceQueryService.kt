@@ -41,13 +41,28 @@ class PieceQueryService(
 
         val pieceProblems = pieceProblemRepository.findAllByPieceId(piece.id!!)
 
-        val problems = problemRepository.fetchAllById(
-            pieceProblems.map { it.problemId }
-        )
+        val problems = problemRepository.fetchAllById(pieceProblems.map { it.problemId })
 
         val studentGrades = studentProblemGradeRepository.findAllByPieceId(piece.id!!)
 
-        return piece.analyze(problems, studentGrades).generateResponse()
+        val analysis = piece.analyze(problems, studentGrades)
+
+        return AnalyzePieceResponse(
+            pieceId = analysis.getPieceId(),
+            pieceName = analysis.getPieceName(),
+            students = analysis.getStudentAnalytics().map {
+                AnalyzePieceResponse.StudentData(
+                    studentId = it.studentId,
+                    correctRate = it.correctRate,
+                )
+            },
+            problemStatistics = analysis.getProblemAnalytics().map {
+                AnalyzePieceResponse.ProblemStatistics(
+                    problemId = it.problemId,
+                    correctRate = it.correctRate,
+                )
+            }
+        )
     }
 
 }
