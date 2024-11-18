@@ -1,33 +1,38 @@
 package com.seungilahn.domain
 
-data class LevelCategory(
-    val name: String,
-    val easyRate: Double,
-    val mediumRate: Double,
-    val hardRate: Double
+enum class LevelCategory(
+    private val easyRate: Double,
+    private val mediumRate: Double,
+    private val hardRate: Double,
+    val problemLevels: List<Int>
 ) {
+    LOW(0.5, 0.3, 0.2, listOf(1))
+    , MIDDLE(0.25, 0.5, 0.25, listOf(2, 3, 4))
+    , HIGH(0.2, 0.3, 0.5, listOf(5))
+    ;
+
+    fun selectProblems(problems: List<Problem>, totalCount: Int): List<Problem> {
+        val easyProblems = problems.filter { it.level in LOW.problemLevels }.shuffled()
+        val mediumProblems = problems.filter { it.level in MIDDLE.problemLevels }.shuffled()
+        val hardProblems = problems.filter { it.level in HIGH.problemLevels }.shuffled()
+
+        val easyCount = (totalCount * easyRate).toInt()
+        val mediumCount = (totalCount * mediumRate).toInt()
+        val hardCount = totalCount - easyCount - mediumCount
+
+        return easyProblems.take(easyCount) +
+                mediumProblems.take(mediumCount) +
+                hardProblems.take(hardCount)
+    }
 
     companion object {
-        private val LOW = LevelCategory("LOW", 0.5, 0.3, 0.2)
-        private val MIDDLE = LevelCategory("MIDDLE", 0.25, 0.5, 0.25)
-        private val HIGH = LevelCategory("HIGH", 0.2, 0.3, 0.5)
-
-        fun fromString(value: String): LevelCategory {
-            return when (value.uppercase()) {
+        fun fromString(level: String): LevelCategory {
+            return when (level.uppercase()) {
                 "LOW" -> LOW
                 "MIDDLE" -> MIDDLE
                 "HIGH" -> HIGH
-                else -> throw IllegalArgumentException("Invalid level category: $value")
+                else -> throw IllegalArgumentException("Invalid level category: $level")
             }
-        }
-    }
-
-    fun getLevelRange(): List<Int> {
-        return when (name) {
-            "LOW" -> listOf(1)
-            "MIDDLE" -> listOf(2, 3, 4)
-            "HIGH" -> listOf(5)
-            else -> throw IllegalArgumentException("Invalid level category: $name")
         }
     }
 

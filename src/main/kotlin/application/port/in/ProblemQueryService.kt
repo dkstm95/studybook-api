@@ -25,7 +25,7 @@ class ProblemQueryService(
             ProblemSearchCriteria(
                 unitCodeList = unitCodeList,
                 problemType = problemType,
-                levelRange = levelCategory.getLevelRange()
+                levelRange = levelCategory.problemLevels
             )
         )
 
@@ -33,17 +33,7 @@ class ProblemQueryService(
             return emptyList()
         }
 
-        val easyProblems = filteredProblems.filter { it.level == 1 }
-        val mediumProblems = filteredProblems.filter { it.level in 2..4 }
-        val hardProblems = filteredProblems.filter { it.level == 5 }
-
-        val easyCount = (totalCount * levelCategory.easyRate).toInt()
-        val mediumCount = (totalCount * levelCategory.mediumRate).toInt()
-        val hardCount = totalCount - easyCount - mediumCount
-
-        val selectedProblems = easyProblems.take(easyCount) +
-                mediumProblems.take(mediumCount) +
-                hardProblems.take(hardCount)
+        val selectedProblems = levelCategory.selectProblems(filteredProblems, totalCount)
 
         return selectedProblems.map { GetProblemResponse.from(it) }
     }
