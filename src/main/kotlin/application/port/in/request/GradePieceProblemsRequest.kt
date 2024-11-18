@@ -5,14 +5,14 @@ import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.NotNull
 
 data class GradePieceProblemsRequest(
-    @field:NotEmpty
+    @field:NotEmpty(message = "Student problem answers must not be empty.")
     val studentProblemAnswers: List<StudentProblemAnswer>?
 ) {
     data class StudentProblemAnswer(
-        @field:NotNull
+        @field:NotNull(message = "Problem ID must not be null.")
         val problemId: Long?,
 
-        @field:NotBlank
+        @field:NotBlank(message = "Student answer must not be blank.")
         val studentAnswer: String?
     )
 }
