@@ -15,9 +15,9 @@ class PieceAssignment(
     val id: Long ?= null
 ) : BaseTimeEntity() {
 
-    fun grade(problems: List<Problem>, studentAnswers: List<StudentAnswer>): GradingResult {
+    fun grade(problems: List<Problem>, studentAnswers: List<StudentAnswer>): StudentGradingResult {
         validateStudentAnswers(problems, studentAnswers)
-        return GradingResult.create(this, problems, studentAnswers)
+        return StudentGradingResult.create(this, problems, studentAnswers)
     }
 
     private fun validateStudentAnswers(problems: List<Problem>, studentAnswers: List<StudentAnswer>) {

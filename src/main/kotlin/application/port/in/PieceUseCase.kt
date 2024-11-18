@@ -97,12 +97,12 @@ class PieceUseCase(
         )
     }
 
-    private fun saveGrades(gradingResult: GradingResult) {
+    private fun saveGrades(studentGradingResult: StudentGradingResult) {
         studentProblemGradeRepository.saveAll(
-            gradingResult.getGradedProblems().map { problem ->
+            studentGradingResult.getGradedProblems().map { problem ->
                 StudentProblemGrade.withoutId(
-                    studentId = gradingResult.getStudentId(),
-                    pieceId = gradingResult.getPieceId(),
+                    studentId = studentGradingResult.getStudentId(),
+                    pieceId = studentGradingResult.getPieceId(),
                     problemId = problem.problemId,
                     isCorrect = problem.isCorrect
                 )

@@ -1,6 +1,6 @@
 package com.seungilahn.domain
 
-class GradingResult private constructor(
+class StudentGradingResult private constructor(
     private val assignment: PieceAssignment,
     private val gradedProblems: List<GradedProblem>
 ) {
@@ -20,7 +20,7 @@ class GradingResult private constructor(
             assignment: PieceAssignment,
             problems: List<Problem>,
             studentAnswers: List<StudentAnswer>
-        ): GradingResult {
+        ): StudentGradingResult {
             val problemMap = problems.associateBy { it.id!! }
 
             val gradedProblems = studentAnswers.map { studentAnswer ->
@@ -34,7 +34,7 @@ class GradingResult private constructor(
                     isCorrect = problem.isCorrect(studentAnswer.answer)
                 )
             }
-            return GradingResult(assignment, gradedProblems)
+            return StudentGradingResult(assignment, gradedProblems)
         }
     }
 }
