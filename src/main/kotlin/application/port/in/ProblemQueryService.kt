@@ -2,7 +2,7 @@ package com.seungilahn.application.port.`in`
 
 import com.seungilahn.application.port.`in`.response.GetProblemResponse
 import com.seungilahn.application.port.out.ProblemRepository
-import com.seungilahn.domain.DifficultyCategory
+import com.seungilahn.domain.ProblemDifficulty
 import com.seungilahn.domain.ProblemSearchCriteria
 import com.seungilahn.domain.ProblemType
 import org.springframework.stereotype.Service
@@ -17,7 +17,7 @@ class ProblemQueryService(
     fun getProblems(
         totalCount: Int,
         unitCodeList: List<String>,
-        difficultyCategory: DifficultyCategory,
+        problemDifficulty: ProblemDifficulty,
         problemType: ProblemType
     ): List<GetProblemResponse> {
 
@@ -25,7 +25,7 @@ class ProblemQueryService(
             ProblemSearchCriteria(
                 unitCodeList = unitCodeList,
                 problemType = problemType,
-                levelRange = difficultyCategory.difficultyLevels
+                levelRange = problemDifficulty.difficultyLevels
             )
         )
 
@@ -33,7 +33,7 @@ class ProblemQueryService(
             return emptyList()
         }
 
-        val selectedProblems = difficultyCategory.selectProblems(filteredProblems, totalCount)
+        val selectedProblems = problemDifficulty.selectProblems(filteredProblems, totalCount)
 
         return selectedProblems.map { GetProblemResponse.from(it) }
     }

@@ -3,7 +3,7 @@ package com.seungilahn.adapter.`in`.web
 import com.seungilahn.application.port.`in`.ProblemQueryService
 import com.seungilahn.application.port.`in`.response.GetProblemResponse
 import com.seungilahn.common.ApiResponse
-import com.seungilahn.domain.DifficultyCategory
+import com.seungilahn.domain.ProblemDifficulty
 import com.seungilahn.domain.ProblemType
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -25,7 +25,7 @@ class ProblemController(
         problemQueryService.getProblems(
             totalCount,
             unitCodeList,
-            DifficultyCategory.fromString(level),
+            ProblemDifficulty.fromString(level),
             ProblemType.fromString(problemType)
         )
     )

@@ -1,6 +1,6 @@
 package com.seungilahn.domain
 
-enum class DifficultyCategory(
+enum class ProblemDifficulty(
     private val easyWeight: Double,
     private val mediumWeight: Double,
     private val hardWeight: Double,
@@ -26,7 +26,7 @@ enum class DifficultyCategory(
     }
 
     companion object {
-        fun fromString(category: String): DifficultyCategory {
+        fun fromString(category: String): ProblemDifficulty {
             return valueOf(category.uppercase())
         }
     }
