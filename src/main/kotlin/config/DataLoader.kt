@@ -49,7 +49,7 @@ class DataLoader(
             problemRepository.save(
                 Problem.withId(
                     id = problemId,
-                    level = level,
+                    difficultyLevel = level,
                     type = ProblemType.fromString(type),
                     answer = answer,
                     unitCode = unitCode

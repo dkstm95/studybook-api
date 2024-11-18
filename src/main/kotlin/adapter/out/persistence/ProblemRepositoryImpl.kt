@@ -31,7 +31,7 @@ class ProblemRepositoryImpl(
         }
 
         if (criteria.levelRange.isNotEmpty()) {
-            builder.and(qProblem.level.`in`(criteria.levelRange))
+            builder.and(qProblem.difficultyLevel.`in`(criteria.levelRange))
         }
 
         return jpaQueryFactory.selectFrom(qProblem)

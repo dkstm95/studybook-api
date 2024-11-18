@@ -14,7 +14,7 @@ data class GetProblemResponse(
             id = problem.id!!,
             answer = problem.answer,
             unitCode = problem.unitCode.code,
-            level = problem.level,
+            level = problem.difficultyLevel,
             problemType = problem.type.name
         )
     }

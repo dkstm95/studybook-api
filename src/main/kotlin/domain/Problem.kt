@@ -5,7 +5,7 @@ import jakarta.persistence.*
 @Entity
 class Problem(
     @Column(nullable = false)
-    val level: Int,
+    val difficultyLevel: Int,
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -26,7 +26,13 @@ class Problem(
     }
 
     companion object {
-        fun withId(id: Long, level: Int, type: ProblemType, answer: String, unitCode: UnitCode) =
-            Problem(level, type, answer, unitCode, id)
+        fun withId(id: Long, difficultyLevel: Int, type: ProblemType, answer: String, unitCode: UnitCode) =
+            Problem(
+                difficultyLevel = difficultyLevel,
+                type = type,
+                answer = answer,
+                unitCode = unitCode,
+                id = id
+            )
     }
 }
