@@ -13,10 +13,10 @@ class PieceController(
     private val useCase: PieceUseCase,
 ) {
 
-    // TODO: teacher authentication
+    // TODO: teacherId should be retrieved from authentication
     @PostMapping("/piece")
     fun create(@RequestBody @Valid request: CreatePieceRequest): ApiResponse<CreatePieceResponse> = ApiResponse.success(
-        useCase.create(request.teacherId!!, request.pieceName!!, request.problemIds!!)
+        useCase.create(teacherId = 1, pieceName = request.pieceName!!, problemIds = request.problemIds!!)
     )
 
     // TODO: teacherId should be retrieved from authentication
@@ -36,6 +36,7 @@ class PieceController(
         queryService.getPieceProblems(pieceId = pieceId, studentId = 1)
     )
 
+    // TODO: teacher authentication
     @GetMapping("/piece/analyze")
     fun analyzePiece(
         @RequestParam pieceId: Long
