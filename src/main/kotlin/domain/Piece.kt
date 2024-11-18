@@ -19,9 +19,12 @@ class Piece(
     var name: String = name
         protected set
 
+    fun isSameTeacher(teacherId: Long) = this.teacherId == teacherId
+
+    fun analyze(problems: List<Problem>, grades: List<StudentProblemGrade>): PieceAnalysis =
+        PieceAnalysis(piece = this, problems = problems, grades = grades)
+
     companion object {
         fun withoutId(teacherId: Long, name: String) = Piece(teacherId, name)
     }
-
-    fun isSameTeacher(teacherId: Long) = this.teacherId == teacherId
 }
