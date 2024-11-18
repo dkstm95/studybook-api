@@ -14,20 +14,20 @@ class Piece(
     val id: Long ?= null
 ) : BaseTimeEntity() {
     @Column(nullable = false)
-    var teacherId: Long = teacherId
+    var teacherId = teacherId
         protected set
 
     @Column(nullable = false)
-    var name: String = name
+    var name = name
         protected set
 
     @Column(nullable = false)
-    var activated: Boolean = activated
+    var activated = activated
         protected set
 
     fun assignToStudents(studentIds: List<Long>, teacherId: Long): List<PieceAssignment> {
         require(this.teacherId == teacherId) { "본인이 생성한 학습지만 배정할 수 있습니다." }
-        return studentIds.map { PieceAssignment.withoutId(studentId = it, piece = this) }
+        return studentIds.map { PieceAssignment.create(studentId = it, piece = this) }
     }
 
     fun analyze(problems: List<Problem>, grades: List<StudentProblemGrade>): PieceAnalysis =
