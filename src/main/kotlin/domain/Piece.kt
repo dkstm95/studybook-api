@@ -8,6 +8,8 @@ class Piece(
 
     name: String,
 
+    activated: Boolean,
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long ?= null
 ) : BaseTimeEntity() {
@@ -17,6 +19,10 @@ class Piece(
 
     @Column(nullable = false)
     var name: String = name
+        protected set
+
+    @Column(nullable = false)
+    var activated: Boolean = activated
         protected set
 
     fun assignToStudents(studentIds: List<Long>, teacherId: Long): List<PieceAssignment> {
@@ -34,7 +40,7 @@ class Piece(
             require(problems.isNotEmpty() && problems.size <= MAX_PIECE_PROBLEMS_COUNT) {
                 "문제는 1개 이상 ${MAX_PIECE_PROBLEMS_COUNT}개 이하로 선택해주세요."
             }
-            return Piece(teacherId = teacherId, name = name)
+            return Piece(teacherId = teacherId, name = name, activated = true)
         }
     }
 }
