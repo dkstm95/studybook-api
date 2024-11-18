@@ -19,7 +19,10 @@ class Piece(
     var name: String = name
         protected set
 
-    fun isSameTeacher(teacherId: Long) = this.teacherId == teacherId
+    fun assignToStudents(studentIds: List<Long>, teacherId: Long): List<PieceAssignment> {
+        require(this.teacherId == teacherId) { "본인이 생성한 학습지만 배정할 수 있습니다." }
+        return studentIds.map { PieceAssignment.withoutId(studentId = it, piece = this) }
+    }
 
     fun analyze(problems: List<Problem>, grades: List<StudentProblemGrade>): PieceAnalysis =
         PieceAnalysis(piece = this, problems = problems, grades = grades)
@@ -33,7 +36,5 @@ class Piece(
             }
             return Piece(teacherId = teacherId, name = name)
         }
-
-        fun withoutId(teacherId: Long, name: String) = Piece(teacherId, name)
     }
 }

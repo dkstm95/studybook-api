@@ -50,16 +50,17 @@ class PieceUseCase(
         val piece = pieceRepository.findPieceById(pieceId)
             ?: throw IllegalArgumentException("존재하지 않는 학습지입니다.")
 
-        if (!piece.isSameTeacher(teacherId)) {
-            throw IllegalArgumentException("본인이 생성한 학습지만 배정할 수 있습니다.")
-        }
-
-        val assignedStudentIds = pieceRepository.findAllAssignmentByPieceId(pieceId).map { it.studentId }
+        val existingAssignments = pieceRepository.findAllAssignmentByPieceId(piece.id!!)
+        val assignedStudentIds = existingAssignments.map { it.studentId }
         val unassignedStudentIds = studentIds.filter { it !in assignedStudentIds }
 
-        pieceRepository.saveAllAssignment(
-            unassignedStudentIds.map { PieceAssignment.withoutId(studentId = it, piece = piece) }
-        )
+        if (unassignedStudentIds.isNotEmpty()) {
+            val newAssignments = piece.assignToStudents(
+                studentIds = unassignedStudentIds,
+                teacherId = teacherId
+            )
+            pieceRepository.saveAllAssignment(newAssignments)
+        }
 
         return AssignPieceResponse(
             pieceId = piece.id!!,
