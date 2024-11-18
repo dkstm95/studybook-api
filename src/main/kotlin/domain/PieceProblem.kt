@@ -15,6 +15,6 @@ class PieceProblem(
     val id: Long? = null
 ) : BaseTimeEntity() {
     companion object {
-        fun withoutId(pieceId: Long, problemId: Long) = PieceProblem(pieceId, problemId)
+        fun create(pieceId: Long, problemId: Long) = PieceProblem(pieceId, problemId)
     }
 }

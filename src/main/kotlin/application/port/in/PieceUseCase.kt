@@ -32,7 +32,7 @@ class PieceUseCase(
         val savedPiece = pieceRepository.savePiece(newPiece)
 
         val pieceProblems = problems.map {
-            PieceProblem.withoutId(pieceId = savedPiece.id!!, problemId = it.id!!)
+            PieceProblem.create(pieceId = savedPiece.id!!, problemId = it.id!!)
         }
 
         pieceProblemRepository.saveAll(pieceProblems)
@@ -100,7 +100,7 @@ class PieceUseCase(
     private fun saveGrades(studentGradingResult: StudentGradingResult) {
         studentProblemGradeRepository.saveAll(
             studentGradingResult.getGradedProblems().map { problem ->
-                StudentProblemGrade.withoutId(
+                StudentProblemGrade.create(
                     studentId = studentGradingResult.getStudentId(),
                     pieceId = studentGradingResult.getPieceId(),
                     problemId = problem.problemId,

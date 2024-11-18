@@ -14,6 +14,6 @@ class UnitCode(
     val id: Long? = null
 ) : BaseTimeEntity() {
     companion object {
-        fun withoutId(code: String, name: String) = UnitCode(code, name)
+        fun create(code: String, name: String) = UnitCode(code, name)
     }
 }

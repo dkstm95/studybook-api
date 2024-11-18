@@ -28,7 +28,7 @@ class DataLoader(
             val code = row.getCell(1).stringCellValue
             val name = row.getCell(2).stringCellValue
 
-            unitCodeRepository.save(UnitCode.withoutId(code, name))
+            unitCodeRepository.save(UnitCode.create(code, name))
         }
 
         val unitCodeMap = unitCodeRepository.findAll().associateBy { it.code }

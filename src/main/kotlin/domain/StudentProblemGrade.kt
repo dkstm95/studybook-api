@@ -20,7 +20,7 @@ class StudentProblemGrade(
     val id: Long ?= null
 ) : BaseTimeEntity() {
     companion object {
-        fun withoutId(studentId: Long, pieceId: Long, problemId: Long, isCorrect: Boolean) = StudentProblemGrade(
+        fun create(studentId: Long, pieceId: Long, problemId: Long, isCorrect: Boolean) = StudentProblemGrade(
             studentId = studentId,
             pieceId = pieceId,
             problemId = problemId,
