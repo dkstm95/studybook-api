@@ -20,29 +20,27 @@ class PieceUseCase(
     private val studentProblemGradeRepository: StudentProblemGradeRepository,
 ) {
 
-    companion object {
-        private const val MAX_PIECE_PROBLEMS_COUNT = 50
-    }
-
     @Transactional
     fun create(teacherId: Long, pieceName: String, problemIds: List<Long>): CreatePieceResponse {
-        if (problemIds.isEmpty() || problemIds.size > MAX_PIECE_PROBLEMS_COUNT) {
-            throw IllegalArgumentException("문제는 1개 이상 ${MAX_PIECE_PROBLEMS_COUNT}개 이하로 선택해주세요.")
+        val problems = problemRepository.fetchAllById(problemIds)
+
+        val newPiece = Piece.create(
+            teacherId = teacherId,
+            name = pieceName,
+            problems = problems
+        )
+        val savedPiece = pieceRepository.savePiece(newPiece)
+
+        val pieceProblems = problems.map {
+            PieceProblem.withoutId(pieceId = savedPiece.id!!, problemId = it.id!!)
         }
 
-        val newPiece = pieceRepository.savePiece(
-            Piece.withoutId(teacherId = teacherId, name = pieceName)
-        )
-
-        val problems = problemRepository.fetchAllById(problemIds)
-        pieceProblemRepository.saveAll(
-            problems.map { PieceProblem.withoutId(pieceId = newPiece.id!!, problemId = it.id!!) }
-        )
+        pieceProblemRepository.saveAll(pieceProblems)
 
         return CreatePieceResponse(
-            pieceId = newPiece.id!!,
-            pieceName = newPiece.name,
-            teacherId = newPiece.teacherId,
+            pieceId = savedPiece.id!!,
+            pieceName = savedPiece.name,
+            teacherId = savedPiece.teacherId,
             problems = problems.map { GetProblemResponse.from(it) }
         )
     }
