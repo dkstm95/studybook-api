@@ -1,6 +1,5 @@
 package com.seungilahn.application.port.`in`
 
-import com.seungilahn.application.port.`in`.request.GradePieceProblemsRequest
 import com.seungilahn.application.port.`in`.response.AssignPieceResponse
 import com.seungilahn.application.port.`in`.response.CreatePieceResponse
 import com.seungilahn.application.port.`in`.response.GetProblemResponse
@@ -73,11 +72,9 @@ class PieceUseCase(
     @Transactional
     fun gradePieceProblems(
         pieceId: Long,
-        request: GradePieceProblemsRequest,
+        studentAnswers: List<StudentAnswer>,
         studentId: Long
     ): GradePieceProblemsResponse {
-        val studentAnswers = request.toStudentAnswers()
-
         val assignment = pieceRepository.findAssignmentByPieceIdAndStudentId(pieceId, studentId)
             ?: throw IllegalArgumentException("해당 학습지가 배정되지 않았습니다.")
 

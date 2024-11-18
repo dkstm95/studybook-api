@@ -1,8 +1,7 @@
 package com.seungilahn.adapter.`in`.web
 
-import com.seungilahn.application.port.`in`.*
-import com.seungilahn.application.port.`in`.request.CreatePieceRequest
-import com.seungilahn.application.port.`in`.request.GradePieceProblemsRequest
+import com.seungilahn.application.port.`in`.PieceQueryService
+import com.seungilahn.application.port.`in`.PieceUseCase
 import com.seungilahn.application.port.`in`.response.*
 import com.seungilahn.common.ApiResponse
 import jakarta.validation.Valid
@@ -50,7 +49,7 @@ class PieceController(
         @RequestParam pieceId: Long,
         @RequestBody @Valid request: GradePieceProblemsRequest
     ): ApiResponse<GradePieceProblemsResponse> = ApiResponse.success(
-        useCase.gradePieceProblems(pieceId, request, studentId = 1)
+        useCase.gradePieceProblems(pieceId, request.toStudentAnswers(), studentId = 1)
     )
 
 }

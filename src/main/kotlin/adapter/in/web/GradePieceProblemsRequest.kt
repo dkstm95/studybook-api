@@ -1,4 +1,4 @@
-package com.seungilahn.application.port.`in`.request
+package com.seungilahn.adapter.`in`.web
 
 import com.seungilahn.domain.StudentAnswer
 import jakarta.validation.constraints.NotBlank
