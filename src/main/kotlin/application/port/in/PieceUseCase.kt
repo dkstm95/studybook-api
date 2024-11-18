@@ -76,73 +76,39 @@ class PieceUseCase(
         request: GradePieceProblemsRequest,
         studentId: Long
     ): GradePieceProblemsResponse {
+        val studentAnswers = request.toStudentAnswers()
+
         val assignment = pieceRepository.findAssignmentByPieceIdAndStudentId(pieceId, studentId)
             ?: throw IllegalArgumentException("해당 학습지가 배정되지 않았습니다.")
 
-        val pieceProblemIds = pieceProblemRepository.findAllByPieceId(assignment.piece.id!!).map { it.problemId }
-        val requestProblemIds = request.studentProblemAnswers!!.map { it.problemId!! }
+        val problems = problemRepository.fetchAllById(studentAnswers.map { it.problemId })
 
-        require(pieceProblemIds.containsAll(requestProblemIds)) {
-            "학습지에 포함된 문제만 채점할 수 있습니다."
-        }
+        val gradingResult = assignment.grade(problems, studentAnswers)
 
-        val problems = problemRepository.fetchAllById(requestProblemIds)
-        val problemMap = problems.associateBy { it.id!! }
+        saveGrades(gradingResult)
 
-        val studentProblemGrades = createStudentProblemGrades(
-            studentProblemAnswers = request.studentProblemAnswers,
-            problemMap = problemMap,
-            studentId = studentId,
-            pieceId = pieceId
-        )
-
-        studentProblemGradeRepository.saveAll(studentProblemGrades)
-
-        return createGradePieceProblemsResponse(
-            pieceId = pieceId,
-            studentId = studentId,
-            studentProblemAnswers = request.studentProblemAnswers,
-            studentProblemGrades = studentProblemGrades,
-            problemMap = problemMap
-        )
-    }
-
-    private fun createStudentProblemGrades(
-        studentProblemAnswers: List<GradePieceProblemsRequest.StudentProblemAnswer>,
-        problemMap: Map<Long, Problem>,
-        studentId: Long,
-        pieceId: Long
-    ): List<StudentProblemGrade> {
-        return studentProblemAnswers.map { studentProblemAnswer ->
-            val problem = problemMap[studentProblemAnswer.problemId!!]!!
-            val isCorrect = problem.isCorrect(studentProblemAnswer.studentAnswer!!)
-            StudentProblemGrade.withoutId(
-                studentId = studentId,
-                pieceId = pieceId,
-                problemId = problem.id!!,
-                isCorrect = isCorrect
-            )
-        }
-    }
-
-    private fun createGradePieceProblemsResponse(
-        pieceId: Long,
-        studentId: Long,
-        studentProblemAnswers: List<GradePieceProblemsRequest.StudentProblemAnswer>,
-        studentProblemGrades: List<StudentProblemGrade>,
-        problemMap: Map<Long, Problem>
-    ): GradePieceProblemsResponse {
-        val studentProblemGradesMap = studentProblemGrades.associateBy { it.problemId }
         return GradePieceProblemsResponse(
-            pieceId = pieceId,
-            studentId = studentId,
-            gradedProblems = studentProblemAnswers.map { studentProblemAnswer ->
-                val studentProblemGrade = studentProblemGradesMap[studentProblemAnswer.problemId!!]!!
+            pieceId = gradingResult.getPieceId(),
+            studentId = gradingResult.getStudentId(),
+            gradedProblems = gradingResult.getGradedProblems().map {
                 GradePieceProblemsResponse.GradedProblem(
-                    problemId = studentProblemAnswer.problemId,
-                    studentAnswer = studentProblemAnswer.studentAnswer!!,
-                    correctAnswer = problemMap[studentProblemAnswer.problemId]!!.answer,
-                    isCorrect = studentProblemGrade.isCorrect
+                    problemId = it.problemId,
+                    studentAnswer = it.studentAnswer,
+                    correctAnswer = it.correctAnswer,
+                    isCorrect = it.isCorrect
+                )
+            }
+        )
+    }
+
+    private fun saveGrades(gradingResult: GradingResult) {
+        studentProblemGradeRepository.saveAll(
+            gradingResult.getGradedProblems().map { problem ->
+                StudentProblemGrade.withoutId(
+                    studentId = gradingResult.getStudentId(),
+                    pieceId = gradingResult.getPieceId(),
+                    problemId = problem.problemId,
+                    isCorrect = problem.isCorrect
                 )
             }
         )
